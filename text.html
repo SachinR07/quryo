@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1QNK37DCMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1QNK37DCMM');
+</script>
+    
+<meta charset="UTF-8">
+<title>Text Comparison Tool</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    body { 
+        font-family: Arial, sans-serif; 
+        background: #f3f4f6; 
+        margin: 0; 
+        padding: 20px; 
+    }
+    h2 { margin-bottom: 15px; color: #111827; }
+    .container { 
+        display: flex; 
+        gap: 15px; 
+    }
+    textarea { 
+        width: 100%; 
+        height: 200px; 
+        padding: 12px; 
+        font-size: 14px; 
+        border: 1px solid #d1d5db; 
+        border-radius: 8px; 
+        resize: vertical; 
+        background: white;
+    }
+    .box { 
+        flex: 1; 
+        display: flex; 
+        flex-direction: column; 
+    }
+    label { 
+        font-weight: bold; 
+        margin-bottom: 6px; 
+        color: #374151;
+    }
+    button { 
+        background: #2563eb; 
+        color: white; 
+        padding: 10px 16px; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-size: 14px; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 8px; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button:hover { background: #1e40af; }
+    .tabs { 
+        display: flex; 
+        gap: 10px; 
+        margin-top: 20px; 
+        flex-wrap: wrap; 
+    }
+    .tab { 
+        padding: 8px 12px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        background: #e5e7eb; 
+        font-size: 14px; 
+        display: flex; 
+        align-items: center; 
+        gap: 6px; 
+        transition: background 0.2s; 
+    }
+    .tab:hover { background: #d1d5db; }
+    .tab.active { 
+        background: #2563eb; 
+        color: white; 
+    }
+    .result-container { margin-top: 15px; }
+    .result-box { 
+        background: white; 
+        padding: 15px; 
+        border-radius: 8px; 
+        border: 1px solid #d1d5db; 
+        min-height: 140px; 
+        white-space: pre-wrap; 
+        font-size: 14px; 
+        line-height: 1.5; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .added { background-color: #d1fae5; border-radius: 3px; padding: 1px 2px; }
+    .removed { background-color: #fee2e2; text-decoration: line-through; border-radius: 3px; padding: 1px 2px; }
+</style>
+</head>
+<body>
+
+<h2><i class="fa-solid fa-code-compare"></i> Text Comparison Tool</h2>
+
+<div class="container">
+    <div class="box">
+        <label for="text1"><i class="fa-solid fa-file-lines"></i> Original Text</label>
+        <textarea id="text1" placeholder="Enter original text here..."></textarea>
+    </div>
+    <div class="box">
+        <label for="text2"><i class="fa-solid fa-pen-to-square"></i> Modified Text</label>
+        <textarea id="text2" placeholder="Enter modified text here..."></textarea>
+    </div>
+</div>
+
+<br>
+<button onclick="compareTexts()">
+    <i class="fa-solid fa-arrows-rotate"></i> Compare
+</button>
+
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('all')"><i class="fa-solid fa-list"></i> All Differences</div>
+    <div class="tab" onclick="switchTab('added')"><i class="fa-solid fa-plus"></i> New Content</div>
+    <div class="tab" onclick="switchTab('removed')"><i class="fa-solid fa-minus"></i> Deleted Content</div>
+    <div class="tab" onclick="switchTab('modified')"><i class="fa-solid fa-pen"></i> Modified Content</div>
+</div>
+
+<div class="result-container">
+    <div id="output" class="result-box"><em>Run comparison to see results</em></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
+<script>
+let diffData = [];
+let currentTab = 'all';
+
+function compareTexts() {
+    let text1 = document.getElementById('text1').value;
+    let text2 = document.getElementById('text2').value;
+
+    let dmp = new diff_match_patch();
+    diffData = dmp.diff_main(text1, text2);
+    dmp.diff_cleanupSemantic(diffData);
+
+    renderDiff();
+}
+
+function renderDiff() {
+    let html = '';
+    if (!diffData.length) {
+        document.getElementById('output').innerHTML = "<em>No differences found or comparison not run.</em>";
+        return;
+    }
+
+    for (let [op, data] of diffData) {
+        if (currentTab === 'all') {
+            html += formatDiff(op, data);
+        } else if (currentTab === 'added' && op === 1) {
+            html += `<span class="added">${data}</span>`;
+        } else if (currentTab === 'removed' && op === -1) {
+            html += `<span class="removed">${data}</span>`;
+        } else if (currentTab === 'modified' && op !== 0) {
+            html += formatDiff(op, data);
+        }
+    }
+
+    document.getElementById('output').innerHTML = html || "<em>No content for this view.</em>";
+}
+
+function formatDiff(op, data) {
+    if (op === 0) return data;
+    if (op === 1) return `<span class="added">${data}</span>`;
+    if (op === -1) return `<span class="removed">${data}</span>`;
+}
+
+function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.tab:nth-child(${tabOrder(tab)})`).classList.add('active');
+    renderDiff();
+}
+
+function tabOrder(tab) {
+    return { all: 1, added: 2, removed: 3, modified: 4 }[tab];
+}
+</script>
+
+</body>
+</html>
