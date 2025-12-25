@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas 2025</title>
+   
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Merry Christmas 2025 - A Special Wish Just For You" />
+    <meta property="og:description" content="A personalized Christmas greeting filled with joy and festive magic!" />
+    <meta property="og:image" content="https://www.greetingsgif.com/wp-content/uploads/2021/12/Merry-Christmas-and-Happy-New-Year-Gif_greetingsgif_01211221.gif" />
+    <meta property="og:url" content="YOUR_URL_HERE" />
+   
+    <!-- Favicon -->
+    <link rel="icon" href="https://web.whatsapp.com/favicon-64x64.ico" type="image/png">
+   
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Patrick+Hand&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+   
+    <!-- Animate.css for subtle animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+   
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0f2b3d url('https://i.pinimg.com/originals/a5/ca/89/a5ca8963737a4d09fba5ab2f901d97d9.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Patrick Hand', cursive;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+       
+        /* Falling snow overlay */
+        .snow-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent url('https://cdn.pixabay.com/animation/2023/11/04/16/43/16-43-51-167_512.gif') repeat;
+            pointer-events: none;
+            opacity: 0.8;
+            z-index: 1;
+        }
+       
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 420px;
+            width: 95%;
+            background: rgba(0, 50, 80, 0.7);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+       
+        h1.name {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 4.5rem;
+            color: #fffd;
+            text-shadow: 0 0 20px #fff, 0 0 40px #ff0000, 0 0 60px #ff0000;
+            animation: glow 3s ease-in-out infinite alternate;
+            margin-bottom: 10px;
+        }
+       
+        .wishes {
+            font-size: 2rem;
+            margin: 15px 0;
+            animation: animate__animated animate__pulse infinite 2s;
+        }
+       
+        .year {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700;
+            margin: 20px 0;
+        }
+       
+        .greeting {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin: 25px 0;
+            color: #eee;
+        }
+       
+        .main-gif {
+            margin: 20px 0;
+        }
+        .main-gif img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+       
+        .tree-gif img {
+            max-width: 80%;
+            margin: 20px auto;
+            display: block;
+        }
+       
+        .share-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #25D366;
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+            animation: animate__animated animate__pulse infinite 2s;
+            font-family: 'Patrick Hand', cursive;
+        }
+       
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #fff, 0 0 30px #ff0000; }
+            to { text-shadow: 0 0 30px #fff, 0 0 50px #ff0000, 0 0 70px #ff4500; }
+        }
+       
+        @media (max-width: 500px) {
+            h1.name { font-size: 3.5rem; }
+            .year { font-size: 3rem; }
+            .wishes { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="snow-overlay"></div>
+   
+    <div class="container">
+        <h1 class="name" id="userName"></h1>
+       
+        <div class="wishes animate__animated animate__pulse">
+            wishes you a very
+        </div>
+       
+
+        <div class="year">Merry Christmas 2025</div>
+       
+
+       
+        <div class="greeting">
+                      Happy Holidays and all the best to you in the year to come!
+        </div>
+    </div>
+   
+    <a href="whatsapp://send?text=*A special Christmas wish for you!* 🎄✨ Check this out: YOUR_URL_HERE" class="share-btn">
+        Share on WhatsApp 🎅
+    </a>
+   
+    <!-- Background Christmas Music -->
+    <embed src="https://www.soundjay.com/free-music/sounds/christmas-bells.mp3" loop="true" autostart="true" hidden="true">
+   
+    <script>
+        // Prompt for name (kept for personalization)
+        let userName = prompt("🔽🔽🔽 ENTER YOUR NAME 🔽🔽🔽") || "Friend";
+        document.getElementById("userName").textContent = userName;
+    </script>
+</body>
+</html>
