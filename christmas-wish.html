@@ -9,10 +9,11 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Merry Christmas 2025 - A Special Wish Just For You" />
     <meta property="og:description" content="A personalized Christmas greeting filled with joy and festive magic!" />
-    <meta property="og:url" content="YOUR_URL_HERE" />
+    <meta property="og:url" content="https://quryo.com/christmas-wish.html" />
    
     <!-- Favicon -->
     <link href="favicon.png" rel="icon" type="image/x-icon">
+   
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Patrick+Hand&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
    
@@ -20,7 +21,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
    
     <style>
-        /* Your existing styles remain unchanged */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: #0f2b3d url('https://i.pinimg.com/originals/a5/ca/89/a5ca8963737a4d09fba5ab2f901d97d9.gif') no-repeat center center fixed;
@@ -90,6 +90,21 @@
             color: #eee;
         }
        
+        .main-gif {
+            margin: 20px 0;
+        }
+        .main-gif img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+       
+        .tree-gif img {
+            max-width: 80%;
+            margin: 20px auto;
+            display: block;
+        }
+       
         .share-btn {
             position: fixed;
             bottom: 20px;
@@ -136,7 +151,7 @@
         </div>
     </div>
    
-    <a id="shareBtn" class="share-btn">
+    <a id="shareBtn" class="share-btn" href="#">
         Share on WhatsApp 🎅
     </a>
    
@@ -144,30 +159,53 @@
     <embed src="https://www.soundjay.com/free-music/sounds/christmas-bells.mp3" loop="true" autostart="true" hidden="true">
    
     <script>
-        // Get name from URL parameter if present
-        const urlParams = new URLSearchParams(window.location.search);
-        let userName = urlParams.get('name');
-        
-        // If no name in URL, prompt for it (only happens for the sender/first visitor)
+        // Function to get name from URL
+        function getNameFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('name');
+        }
+
+        // Function to update the URL with the name without reloading the page
+        function updateURLWithName(name) {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('name', encodeURIComponent(name.trim()));
+            history.pushState({}, '', newUrl);
+        }
+
+        // Main logic
+        let userName = getNameFromURL();
+
+        // If no name in URL, prompt the user for it
         if (!userName) {
             userName = prompt("🔽🔽🔽 ENTER YOUR NAME 🔽🔽🔽");
+            
+            // Fallback if user cancels or leaves blank
+            if (!userName || userName.trim() === "") {
+                userName = "Friend";
+            } else {
+                userName = userName.trim();
+            }
+
+            // Update the browser address bar to include the name
+            updateURLWithName(userName);
+        } else {
+            // Name exists in URL – decode it safely
+            userName = decodeURIComponent(userName).trim();
+            if (userName === "") {
+                userName = "Friend";
+            }
         }
-        
-        // Fallback to "Friend" if empty or canceled
-        if (!userName || userName.trim() === "") {
-            userName = "Friend";
-        }
-        
-        // Display the name
-        document.getElementById("userName").textContent = userName.trim();
-        
-        // Generate personalized share link (encode name safely)
-        const currentUrl = window.location.origin + window.location.pathname;
-        const shareUrl = `${currentUrl}?name=${encodeURIComponent(userName.trim())}`;
-        const shareText = `*A special Christmas wish from ${userName.trim()}!* 🎄✨ Check this out: ${shareUrl}`;
-        
-        // Set the WhatsApp share link
-        document.getElementById("shareBtn").href = `whatsapp://send?text=${encodeURIComponent(shareText)}`;
+
+        // Display the name on the page
+        document.getElementById("userName").textContent = userName;
+
+        // Create the personalized share text and link
+        const shareUrl = window.location.href; // Already includes ?name=...
+        const shareText = `*A special Christmas wish from ${userName}!* 🎄✨\nCheck this out: ${shareUrl}`;
+
+        // Set the WhatsApp share button href
+        document.getElementById("shareBtn").href = 
+            `whatsapp://send?text=${encodeURIComponent(shareText)}`;
     </script>
 </body>
 </html>
