@@ -90,21 +90,6 @@
             color: #eee;
         }
        
-        .main-gif {
-            margin: 20px 0;
-        }
-        .main-gif img {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
-       
-        .tree-gif img {
-            max-width: 80%;
-            margin: 20px auto;
-            display: block;
-        }
-       
         .share-btn {
             position: fixed;
             bottom: 20px;
@@ -159,51 +144,28 @@
     <embed src="https://www.soundjay.com/free-music/sounds/christmas-bells.mp3" loop="true" autostart="true" hidden="true">
    
     <script>
-        // Function to get name from URL
-        function getNameFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('name');
-        }
+        // Get the name from the URL parameter ?name=...
+        const urlParams = new URLSearchParams(window.location.search);
+        let userName = urlParams.get('name');
 
-        // Function to update the URL with the name without reloading the page
-        function updateURLWithName(name) {
-            const newUrl = new URL(window.location);
-            newUrl.searchParams.set('name', encodeURIComponent(name.trim()));
-            history.pushState({}, '', newUrl);
-        }
-
-        // Main logic
-        let userName = getNameFromURL();
-
-        // If no name in URL, prompt the user for it
-        if (!userName) {
-            userName = prompt("🔽🔽🔽 ENTER YOUR NAME 🔽🔽🔽");
-            
-            // Fallback if user cancels or leaves blank
-            if (!userName || userName.trim() === "") {
-                userName = "Friend";
-            } else {
-                userName = userName.trim();
-            }
-
-            // Update the browser address bar to include the name
-            updateURLWithName(userName);
-        } else {
-            // Name exists in URL – decode it safely
+        // Decode and clean the name
+        if (userName) {
             userName = decodeURIComponent(userName).trim();
-            if (userName === "") {
-                userName = "Friend";
-            }
         }
 
-        // Display the name on the page
+        // If no name provided or empty, fall back to "Friend"
+        if (!userName || userName === "") {
+            userName = "Friend";
+        }
+
+        // Display the name
         document.getElementById("userName").textContent = userName;
 
-        // Create the personalized share text and link
-        const shareUrl = window.location.href; // Already includes ?name=...
+        // Create the share text using the current full URL (which already includes the name)
+        const shareUrl = window.location.href;
         const shareText = `*A special Christmas wish from ${userName}!* 🎄✨\nCheck this out: ${shareUrl}`;
 
-        // Set the WhatsApp share button href
+        // Set the WhatsApp share link
         document.getElementById("shareBtn").href = 
             `whatsapp://send?text=${encodeURIComponent(shareText)}`;
     </script>
